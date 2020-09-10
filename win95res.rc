@@ -1,0 +1,275 @@
+/****************************************************************************
+
+
+timidity.rc
+
+produced by Borland Resource Workshop
+
+
+*****************************************************************************/
+#include "windows.h"
+#include "config.h"
+#include "win95res.h"
+
+/**************************************************************************/
+/**	 main windows
+ */
+
+TIMIDITY_ICON ICON "timidity.ico"
+
+TIMIDITY_MENU MENU 
+{
+ POPUP "File"
+ {
+  MENUITEM "&Open", IDM_FILEOPEN
+  MENUITEM SEPARATOR
+  MENUITEM "&Quit", IDM_QUIT
+ }
+
+ POPUP "&Configure"
+ {
+  MENUITEM "&General", IDM_CFGGEN
+  MENUITEM "&Output", IDM_CFGOUTPUT
+  MENUITEM "&Midi render", IDM_CFGMIDI
+ }
+
+ POPUP "&Output"
+ {
+  MENUITEM " ", IDM_VOID
+ }
+
+ POPUP "&Help"
+ {
+  MENUITEM "&About", IDM_ABOUT
+ }
+
+}
+
+OUTPUT_MENU MENU DISCARDABLE 
+{
+    MENUITEM "Clear", IDB_CLEARMESSAGES
+    MENUITEM "Dismiss", IDB_DISMISS
+}
+
+IDB_BUTTON BITMAP "button.bmp"
+
+/**************************************************************************/
+/**	message windows 
+ */
+
+DLG_MESSAGES DIALOGEX DISCARDABLE 50, 50, 290, 130
+STYLE WS_THICKFRAME | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW 
+CAPTION "Timidity messages"
+FONT 8, "MS Sans Serif"
+{
+    EDITTEXT        IDE_MESSAGES,1,15,288,115,ES_MULTILINE | ES_AUTOHSCROLL | 
+                    ES_READONLY | WS_VSCROLL
+    PUSHBUTTON      "Dismiss",IDB_DISMISS,31,1,36,12
+    PUSHBUTTON      "Clear",IDB_CLEARMESSAGES,2,1,26,12
+}
+
+/**************************************************************************/
+/**	about dialog
+ */
+
+DLG_ABOUT DIALOG 7, 16, 175, 106
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "About Timidity95"
+FONT 8, "MS Sans Serif"
+{
+    DEFPUSHBUTTON   "OK",IDOK,62,84,50,14
+    LTEXT           "Timidity version 0.7",-1,36,14,73,10
+    LTEXT           "Experimental MIDI to WAVE converter",-1,19,33,124,10
+    LTEXT           "Original UNIX version: Tuukka Toivonen",-1,19,45,138,10
+    LTEXT           "Windows 95 port and channel effects processing: Nicolas Witczak", -1,19,58,122,17
+    ICON            1,-1,8,8,20,20
+ DEFPUSHBUTTON "GNU", IDB_INTERESTING, 135, 12, 27, 11
+}
+
+/**************************************************************************/
+/**	interesting dialog dialog
+ */
+
+DLG_INTERSTING DIALOG 4, 16, 257, 156
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Interesting message"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "OK", IDOK, 100, 132, 50, 14
+ LTEXT "This program is free software; you can redistribute it and/or modify", -1, 6, 8, 244, 8
+ LTEXT "it under the terms of the GNU General Public License as published by", -1, 6, 16, 244, 8
+ LTEXT "(at your option) any later version.", -1, 6, 32, 244, 8
+ LTEXT "the Free Software Foundation; either version 2 of the License, or", -1, 6, 24, 244, 8
+ LTEXT "This program is distributed in the hope that it will be useful,", -1, 6, 48, 244, 8
+ LTEXT "GNU General Public License for more details.", -1, 6, 72, 244, 8
+ LTEXT "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the", -1, 6, 64, 244, 8
+ LTEXT "but WITHOUT ANY WARRANTY; without even the implied warranty of", -1, 6, 56, 244, 8
+ LTEXT "This program is distributed in the hope that it will be useful,", -1, 6, 80, 244, 8
+ LTEXT "Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.", -1, 6, 112, 244, 8
+ LTEXT "along with this program; if not, write to the Free Software", -1, 6, 104, 244, 8
+ LTEXT "You should have received a copy of the GNU General Public License", -1, 6, 96, 244, 8
+}
+
+/**************************************************************************/
+/**	general conf dialog
+ */
+
+DLG_GENCONF DIALOG	6, 15, 242, 130
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "General  Configuration"
+FONT 8, "MS Sans Serif"
+{
+    GROUPBOX        "Output",-1,3,35,175,43
+    GROUPBOX        "Timidity config file             ",-1,4,2,175, 31
+    GROUPBOX        "",-1,4,81,175,43
+    DEFPUSHBUTTON   "OK",IDOK,185,6,51,14
+    PUSHBUTTON      "Cancel",IDCANCEL,185,24,51,14
+    EDITTEXT        IDE_TIMIDCFGPATH,9,16,163,12
+    PUSHBUTTON      "...",IDB_GETCFGPATH,69,2,16,9
+    CONTROL         "Free instrument afterward",IDC_FREEINSTR,"BUTTON", BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,11,92,145,11
+    EDITTEXT        IDE_VOLUME,122,106,36,12
+    LTEXT           "Volume",-1,13,109,42,8
+    CONTROL         "View output msg",IDC_VIEWOUTPUTMSG,"BUTTON", BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,21,48,137,10
+    LTEXT           "Verbose level",-1,22,62,52,8
+    EDITTEXT        IDE_VERBOSE,122,61,36,12
+}
+
+/**************************************************************************/
+/**	output conf dialog
+ */
+
+DLG_OUTPUTCONF DIALOG 4, 17, 255, 148
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Output  Configuration"
+FONT 8, "MS Sans Serif"
+{
+    GROUPBOX        "Output file            ",-1,4,45,190,28
+    GROUPBOX        "Fragments",-1,4,113,189,30
+    GROUPBOX        "Mode",-1,4,78,190,30
+    DEFPUSHBUTTON   "OK",IDOK,200,5,52,14
+    PUSHBUTTON      "Cancel",IDCANCEL,200,22,51,14
+    EDITTEXT        IDE_SAMPLERATE,140,11,40,12
+    LTEXT           "Sampling rate (Hz)",-1,19,13,58,8
+    LTEXT           "num",-1,19,127,16,8
+    EDITTEXT        IDE_CBFRGMT,41,125,34,12
+    CONTROL         "Mono",IDR_MONO,"Button",BS_AUTORADIOBUTTON |  BS_LEFTTEXT | WS_GROUP,11,92,30,8
+    CONTROL         "Stereo",IDR_STEREO,"Button",BS_AUTORADIOBUTTON |  BS_LEFTTEXT,57,92,34,9
+    CONTROL         "16 bit",IDR_16BIT,"Button",BS_AUTORADIOBUTTON |  BS_LEFTTEXT | WS_GROUP,153,92,30,8
+    CONTROL         "8 bit",IDR_8BIT,"Button",BS_AUTORADIOBUTTON |  BS_LEFTTEXT,112,92,26,9
+    EDITTEXT        IDE_OUTPUTPATH,8,56,181,12
+    PUSHBUTTON      "---",IDB_GETOUTPUTPATH,46,45,16,8
+    CONTROL         "Trust win audio sample rate",IDC_TRUSTDRV,"Button", BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,17,26,132,11
+    GROUPBOX        "Driver",-1,4,1,190,39
+    EDITTEXT        IDE_SZFRGMT,136,125,34,12
+    LTEXT           "size",-1,116,127,18,8
+}
+
+/**************************************************************************/
+/**	midi conf dialog
+ */
+
+DLG_MIDICONF DIALOG DISCARDABLE  7, 16, 191, 116
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Midi  Configuration"
+FONT 8, "MS Sans Serif"
+{
+    CONTROL         "Fast decay",IDC_FASTDECAY,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,10,44,111,11
+    LTEXT           "Control rate ( s-1)",-1,11,9,67,8
+    EDITTEXT        IDE_CTRLRATE,93,7,30,12
+    CONTROL         "Fast adjust panning ",IDC_FASTPANNING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,9,54,112,11
+    CONTROL         "Anti aliasing",IDC_ANTIALIASING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,9,64,112,11
+    LTEXT           "Voices Number",-1,11,23,56,8
+    EDITTEXT        IDE_CBVOICE,93,22,30,12
+    LTEXT           "Voices Channels",-1,11,87,56,8
+    PUSHBUTTON      "...",IDB_MIDICHNLS,106,86,18,9
+    LTEXT           "Channel effect processing ",-1,9,97,90,11
+    PUSHBUTTON      "...",IDB_CHANNEL_EFFECT,106,97,18,9
+	DEFPUSHBUTTON   "OK",IDOK,136,5,51,14
+    PUSHBUTTON      "Cancel",IDCANCEL,136,21,51,14
+    GROUPBOX        "",-1,4,0,127,38
+    GROUPBOX        "",-1,3,38,128,40
+    GROUPBOX        "",-1,3,77,128,36
+}
+
+
+/**************************************************************************/
+/**	midi channel conf dialog
+ */
+
+DLG_MIDICHANNELS DIALOG 6, 15, 222, 193
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Midi channels"
+FONT 8, "MS Sans Serif"
+{
+ LTEXT "Channel 1", -1, 15, 7, 40, 8
+ LTEXT "Channel 2", -1, 15, 18, 40, 8
+ LTEXT "Channel 3", -1, 15, 29, 40, 8
+ LTEXT "Channel 4", -1, 15, 40, 40, 8
+ LTEXT "Channel 5", -1, 15, 51, 40, 8
+ LTEXT "Channel 6", -1, 15, 62, 40, 8
+ LTEXT "Channel 7", -1, 15, 73, 40, 8
+ LTEXT "Channel 8", -1, 15, 84, 40, 8
+ LTEXT "Channel 9", -1, 15, 96, 40, 8
+ LTEXT "Channel 10", -1, 15, 107, 40, 8
+ LTEXT "Channel 11", -1, 15, 118, 40, 8
+ LTEXT "Channel 12", -1, 15, 129, 40, 8
+ LTEXT "Channel 13", -1, 15, 140, 40, 8
+ LTEXT "Channel 14", -1, 15, 151, 40, 8
+ LTEXT "Channel 15", -1, 15, 162, 40, 8
+ LTEXT "Channel 16", -1, 15, 173, 40, 8
+ CONTROL "Drum", IDR_DRUMCHNL1, "BUTTON", BS_AUTORADIOBUTTON | WS_GROUP, 124, 7, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL2, "BUTTON", BS_AUTORADIOBUTTON, 124, 18, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL3, "BUTTON", BS_AUTORADIOBUTTON, 124, 29, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL4, "BUTTON", BS_AUTORADIOBUTTON, 124, 40, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL5, "BUTTON", BS_AUTORADIOBUTTON, 124, 51, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL6, "BUTTON", BS_AUTORADIOBUTTON, 124, 62, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL7, "BUTTON", BS_AUTORADIOBUTTON, 124, 73, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL8, "BUTTON", BS_AUTORADIOBUTTON, 124, 84, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL9, "BUTTON", BS_AUTORADIOBUTTON, 124, 96, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL10, "BUTTON", BS_AUTORADIOBUTTON, 124, 107, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL11, "BUTTON", BS_AUTORADIOBUTTON, 124, 118, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL12, "BUTTON", BS_AUTORADIOBUTTON, 124, 129, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL13, "BUTTON", BS_AUTORADIOBUTTON, 124, 140, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL14, "BUTTON", BS_AUTORADIOBUTTON, 124, 151, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL15, "BUTTON", BS_AUTORADIOBUTTON, 124, 162, 31, 10
+ CONTROL "Drum", IDR_DRUMCHNL16, "BUTTON", BS_AUTORADIOBUTTON, 124, 173, 31, 10
+ CHECKBOX "Quiet", IDC_QUIET1, 75, 6, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET2, 75, 17, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET3, 75, 28, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET4, 75, 39, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET5, 75, 50, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET6, 75, 61, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET7, 75, 72, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET8, 75, 83, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET9, 75, 95, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET10, 75, 106, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET11, 75, 117, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET12, 75, 128, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET13, 75, 139, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET14, 75, 150, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET15, 75, 161, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ CHECKBOX "Quiet", IDC_QUIET16, 75, 172, 40, 11, BS_AUTOCHECKBOX | WS_TABSTOP
+ DEFPUSHBUTTON   "OK",IDOK,167,8,50,14
+ PUSHBUTTON      "Cancel",IDCANCEL,167,24,50,14
+ GROUPBOX        "",-1,5,0,155,185
+}
+
+/**************************************************************************/
+/**	midi effect conf dialog
+ */
+DLG_EFFECT DIALOG DISCARDABLE  0, 0, 191, 32
+STYLE DS_MODALFRAME | WS_VISIBLE | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Channel effects configuration"
+FONT 8, "MS Sans Serif"
+{
+    DEFPUSHBUTTON   "OK",IDOK,138,4,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,138,21,50,14
+    CONTROL         "Channel effect processing ",IDC_CHANNEL_EFFECT,"Button",
+                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,8,6,119,11
+    GROUPBOX        "",-1, 3,0,129,21
+    GROUPBOX        "",IDS_FRAME, 3,19,129,10
+}
+
+

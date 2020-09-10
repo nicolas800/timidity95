@@ -1,0 +1,279 @@
+*---------------------------------*-text-*---------------------------------
+
+    TiMidity -- Experimental MIDI to WAVE converter
+    Copyright (C) 1995 Tuukka Toivonen <toivonen@clinet.fi>
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+*--------------------------------------------------------------------------
+
+	win95 GUI port of timidity and channel effect processing
+
+	THIS README CONCERNS ONLY 'win95 GUI port of timidity and channel effect processing' 
+	TOPICS. IF YOU WANT TO KNOW HOW TO CONFIGURE INTRUMENT DEF FILE 
+	OR HOW TO COMPILE THE SOURCE DO READ THE OTHER READMEs INCLUDED WITH
+	THE ORIGINAL TIMIDITY DISTRIBUTION. In short 'rtfr' .
+
+	Nicolas Witczak 1996 - 1998					<witczak@geocities.fr>
+
+
+*--------------------------------------------------------------------------
+
+
+win95 port description
+======================
+
+		features of windows95 version:
+		------------------------------
+
+* all configurations through dialog boxes
+* source in standard C , should compile with any C compiler. stand alone executable 
+* real time control for play, stop, volume ... 
+* play list with explorer like open dialogue, multi drag&drop 
+	or command line ( great to use with Netscape or MS Explorer ) .
+* reverb , chorus , phaser and celest real time effect controled independently on each channels
+
+		missing features and known bugs
+		-------------------------------
+
+* This port won't work on win32s plateforme user (sorry for you) because of thread use.
+
+		future plan
+		-----------
+
+* improve effect to be more realist  
+(
+	I NEED :
+		- An algorithm for a more realist reverb with stereo effect in the form 
+	H(z) = N(z) / D(z) with actual coefs . 
+		- Precise and recent info about controllers in GM  
+		- I don't know exactly what 'celest' effect stands for ...
+)
+
+* complete command line control of effects according to types and channels. 
+
+* seperate message window for lyrics , text ...
+
+* save midi play list
+
+* vol adjusted in dB
+
+		last update july 20th 1998
+		--------------------------	
+
+* ini file control of effects according to types
+
+* filter.c shall be compiled with no optimisations under mscc
+( anti_aliasing option produced glitchs on some instruments... )
+
+		update july 15th 1998
+		------------------------
+
+* added support for reverb , chorus, phaser and celest effects (alpha stage)
+I've tested under 95 , but should compile on other plateforms as well. Other effect may later be added.
+Effect procesing can be activated at command line with -E switch or later within the win95 gui. Effect 
+will consumes cpu time only if activated on a channel and a note is playing on it,
+though requiring much, much processing time if several effects are activated simultaneously
+on several channels!
+
+* several little GUI improvement.
+
+		 update 21 june 1998
+		--------------------
+
+* fixed wave header in 16bits / 2channels configuration ( from Seb )
+
+		update 30 april 1998
+		--------------------
+
+* reduced interaction between timidity source files and win95 add on source files
+
+* improved output debug window
+
+* conform to ctl and play_mode interface
+	a side effect is that command line switchs may be specified like in UNIX version
+		
+		update 25 decembre   1996
+		-----------------------------
+* fixed some more bugs
+	- program hanged when bad midi file
+	- program hanged when user press stop just after play
+
+		update 3 decembre   1996
+		-----------------------------
+
+* fixed some bugs
+	- windows behave correctly compiled on borland c++ 4.0
+	- trackbar is shown correctly
+	- protection fault corrected while playing forward (well I think so)
+	- output and control structure completely rewritten and optimized
+	- no more infinite look on bad midi file 
+* prevent several instances from being launched
+
+* added an option "trust win audio sample rate value"
+	the reason :
+	many cheap sound card can not reproduce any sample rate exactly. For instance
+	a sound baster with a 1Mhz quartz won't reproduce 44100 Hz but 
+	43478 Hz = 1.000.000 / (int(1.000.000 / 44100) ). The linux driver will return
+	this exact value after an ioctl() call, but not WaveOutOpen() under windows	.
+	Checking this option off recalculate the exact value assuming a 1Mhz quartz
+
+* added a window support for output mode  
+
+
+		additionnal files
+		-----------------
+
++list of files I added for channel effect support
+
+* C source files 
+	+ effect.c .h : 
+		channel mixing , helper function , effect prototype requierement .
+
+	+ reverb_e.c :
+		basic echo implementation.
+
+		symbols to define
+		-----------------
+
+	#define CHANNEL_EFFECT in order to compile with channel effect support
+
+
++list of files I added for the win95 port
+
+*	resources files 
+
+	+ button.bmp :
+		drawing of the buttons stop play ...
+	
+	+ win95res.h : 
+		#define directives for naming menu, controls id used
+		both in resource editor and in C code
+	
+	+ win95res.rc : 
+		standart resource script for menu, dialog and icon to be compiled
+		into a res file 
+
+	+ timidity.ico : 
+		large and mini icon for the application in this file
+
+* C source files 
+	+ win95i.c .h : 			
+		winmain entry point (replace main function)
+		GUI implementation
+		main window creation and message map
+	
+	+ win95cfg.c .h :
+		midi player additional configuration 
+		replace timidity.c file
+
+	+ win95dlg.c .h :
+		dialog proc definition
+
+	+ win95hlp.c .h :
+		various generic helper function
+
+	+ win95_a.c	:
+	   PlayMode struct redefined to conform to windows audio API
+	
+	+ win95ctl.c	:
+	   ControlMode struct redefined to support graphical interface under windows 
+
+* build file
+	+ w95_borl.ide w95_borl.dsw :
+		borland build file (no updated)
+
+	+ timid95.dsp , timid95.dsw 
+		microsoft build file
+	
+	+ timid95.mak : standard make file 
+
+* binary file :
+	timid95.exe stand alone executable
+
+* text file 
+	README.w95 : this readme
+
+		modified files from unix version
+		--------------------------------
+
+slightely modified files from UNIX's Tuukka Toivonen implementation
+doesn't prevent these files to be compiled under UNIX
+
+	+ Makefile :
+		added an entry to compile effect processing c files. I look forward 
+		knowing if it work on other plateforms.
+
+	+ controls.c :
+		added entry 
+			extern ControlMode win95_control_mode ;
+			# ifndef DEFAULT_CONTROL_MODE
+			#  define DEFAULT_CONTROL_MODE &win95_control_mode
+			# endif
+ 		set it to default control mode
+	
+	+ output.c :
+		added entry 
+		extern PlayMode win95_play_mode;		
+		set it to default output mode
+
+	+ timidity.c 
+		added preprocessor statement for loading ini file
+	
+	+ playmidi.c
+		minor modifications in order to add channel effects
+
+	+ readmidi.c
+		minor modifications in order to add channel effects
+		
+	+ wave_a.c
+		added the line 
+		#include <stdio.h> needed for mscc
+	
+	+ config.h
+		added PI define for __WIN32__  plateform
+		added a CHANNEL_EFFECT compile flag
+		
+		
+		symbols to define
+		-----------------
+	AU_WIN95 , IA_WIN95 , __WIN32__  , and possibly CHANNEL_EFFECT
+
+
+installation
+===========
+
+Run it from anywhere , the program will complain it can't 
+find its instrument config file : this should be fixed in configure / general menu.
+That's all
+
+
+compilation
+===========
+
+
+This distribution contain a prebuilt executable to run on win32 intel plateforms
+and sources C code . To recompile it untar the original UNIX distribution, then overwrite
+with timid95 zip files in the same folder. A makefile and specialized project file are 
+included for borland and microsoft C .Any compiler that can also compile resources file 
+should also work.  
+
+
+
+
+							Nicolas Witczak
+                    
+
+							30 april 1998
